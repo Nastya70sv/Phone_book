@@ -1,38 +1,15 @@
-'''
-Создать телефонный справочник с
-возможностью импорта и экспорта данных в
-формате .txt. Фамилия, имя, отчество, номер
-телефона - данные, которые должны находиться
-в файле.
-1. Программа должна выводить данные
-2. Программа должна сохранять данные в
-текстовом файле
-3. Пользователь может ввести одну из
-характеристик для поиска определенной
-записи(Например имя или фамилию
-человека)
-4. Использование функций. Ваша программа
-не должна быть линейной
-
-Задача 38: Дополнить телефонный справочник возможностью изменения
-и удаления данных.
-Пользователь также может ввести имя или фамилию,
-и Вы должны реализовать функционал для изменения и удаления данных.
-
-'''
 import time
 
 
 def menu():
     phone_book = read_file()
-    print("\n\tЧтение справочника.....'1'\n\
-\tПоиск...........'2'\n\
-\tДобавление информации...'3'\n\
-\tУдаление информации...'4'\n\
-\tИзменение информации...'5'\n\
-\tОчистить справочник...'999'\n\
-\tВыход из меню....'0'")
-    mode = input("\nВыберите режим работы со справочником:\n-> ")
+    print("\n\t1.Показать телефонную книгу\n\
+            \t2.Поиск по телефонной книге\n\
+            \t3.Создать новый контакт\n\
+            \t4.Удаление контакта\n\
+            \t5.Изменение контакта\n\
+            \t0.Выход из меню")
+    mode = input("\nВведите команду : \n-> ")
     match mode:
         case '1':            
             print_info(phone_book)
@@ -43,24 +20,25 @@ def menu():
             time.sleep(2)
             menu()
         case '3':            
-            phone_book = new_contact(phone_book)            
+            phone_book = new_contact(phone_book)  
+            menu()          
         case '4':            
-            delete_info(phone_book)        
+            delete_info(phone_book)  
+            menu()      
         case '5':               
-            change_info(phone_book)            
-        case '999':
-            clear_all(phone_book)
+            change_info(phone_book)
+            menu()            
         case '0':
             exit()
         case _:
-            print("Выберите пункт меню!")
+            print("Выберите команду : ")
             time.sleep(2)            
             menu()
     write_file(phone_book)
 
 
 def read_file():
-    with open('Homework_8\\bd.txt', 'r', encoding='utf-8') as file:
+    with open('bd.txt', 'r', encoding='utf-8') as file:
         telephone_book = file.readlines()
     return telephone_book
 
@@ -72,7 +50,7 @@ def print_info(telephone_book):
             print(string.replace(";", " ").strip())
 
 def write_file(telephone_book):    
-    with open('Homework_8\\bd.txt', 'w', encoding='utf-8') as file:
+    with open('bd.txt', 'w', encoding='utf-8') as file:
         file.writelines(telephone_book)    
 
 # поиск контактов
@@ -125,8 +103,7 @@ def new_contact(telephone_book):
 def delete_info(telephone_book):
     flag_run = True
     state = 0
-    search = input("Укажите фамилию контакта\
-для удаления (с заглавной буквы): ")    
+    search = input("Введите фамилию (с заглавной буквы): ")    
     print()
     while flag_run:        
         for string in telephone_book:
@@ -193,16 +170,6 @@ def change_info(telephone_book):
                     return
                 case _:
                     menu()
-
-def clear_all(telephone_book):
-    mode = input("Вы уверены?\n-> Y/N")
-    match mode:
-        case 'Y':            
-            telephone_book.clear()
-            return
-        case 'N':            
-            time.sleep(2)
-            menu()   
 
 
 def main():
