@@ -3,12 +3,13 @@ import time
 
 def menu():
     phone_book = read_file()
-    print("\n\t1.Показать телефонную книгу\n\
-            \t2.Поиск по телефонной книге\n\
-            \t3.Создать новый контакт\n\
-            \t4.Удаление контакта\n\
-            \t5.Изменение контакта\n\
-            \t0.Выход из меню")
+    print("Список команд : ")
+    print("\n \t1.Показать телефонную книгу\n\
+    \t2.Поиск по телефонной книге\n\
+    \t3.Создать новый контакт\n\
+    \t4.Удаление контакта из телефонной книги\n\
+    \t5.Изменение номера телефона контакта\n\
+    \t0.Выход из меню")
     mode = input("\nВведите команду : \n-> ")
     match mode:
         case '1':            
@@ -55,33 +56,20 @@ def write_file(telephone_book):
 
 # поиск контактов
 def search_info(telephone_book):
-    select = input("Укажите как будем искать:\n\
-...По фамилии: '1'\n...По имени: '2' -> ")
     temp = []    
     found = False
-    match select:
-        case '1':
-            string_search = input("Введите фамилию: ")            
-            full_string = string_search.capitalize() + ";"
-            for string in telephone_book:
-                if full_string in string:
-                    temp.append(string)
-                    found = True             
-        case '2':
-            string_search = input("Введите имя: ")            
-            full_string = string_search.capitalize() + ";"
-            for string in telephone_book:
-                if full_string in string:
-                    temp.append(string)
-                    found = True                         
-        case _:
-            print("\nВыберите пункт меню!")
-            time.sleep(2)            
-            menu()
+    string_search = input("Введите имя или фамилию: ")            
+    full_string = string_search.capitalize() + ";"
+    for string in telephone_book:
+        if full_string in string:
+            temp.append(string)
+            found = True             
     if found == True:
         print_info(temp)
+        time.sleep(3)
+        menu()
     else:
-        print("\nКонтакт не найден\n")
+        print("Контакт не найден ")
         time.sleep(3)
         menu()
 
